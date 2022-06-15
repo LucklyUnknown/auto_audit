@@ -1,0 +1,30 @@
+version: "3.9"  # optional since v1.27.0
+
+services:
+  php:
+    networks: 
+      - nugget
+    image: lucklyunknown/php:testing
+    container_name: php
+    depends_on:
+      - mysql
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+  mysql:
+    networks:
+      - nugget
+    environment:
+      MYSQL_ROOT_PASSWORD: beans
+    volumes:
+      - my-datavolume:/var/lib/mysql
+    image: mysql:debian
+    container_name: mysql
+    ports:
+      - "3306:3306"
+networks:
+  # The presence of these objects is sufficient to define them
+  nugget: {}
+volumes:
+  my-datavolume:
